@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d18">
+    <meta name="description" content="Panel web de monitoreo de temperatura ambiental.">
+    <title>ThermoSense | Monitor de temperatura</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <a href="#inicio" class="brand">
+            <span class="brand-icon">°</span>
+            <span>Thermo<span class="brand-accent">Sense</span>
+                <small>MONITOR AMBIENTAL</small>
+            </span>
+        </a>
+
+        <div class="menu-label">PRINCIPAL</div>
+
+        <nav class="navigation">
+            <a href="#inicio" class="nav-link active">
+                <span class="nav-icon">▦</span> Panel general
+            </a>
+            <a href="#grafica" class="nav-link">
+                <span class="nav-icon">⌁</span> Temperatura
+            </a>
+            <a href="#historial" class="nav-link">
+                <span class="nav-icon">◷</span> Historial
+            </a>
+            <a href="#configuracion" class="nav-link">
+                <span class="nav-icon">⚙</span> Configuración
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="device-mini">
+                <span class="device-mini-icon">⌁</span>
+                <div>
+                    <strong>Sensor ambiental</strong>
+                    <small id="sidebar-status">Sin conexión</small>
+                </div>
+                <span class="status-dot offline" id="sidebar-dot"></span>
+            </div>
+
+            <div class="school-label">
+                <strong>LICEO MARIO SAIELLI</strong>
+                <span>Proyecto tecnológico</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content" id="inicio">
+
+        <header class="topbar">
+            <button class="menu-toggle" id="menu-toggle"
+                    aria-label="Abrir menú" aria-expanded="false">
+                ☰
+            </button>
+
+            <div class="breadcrumb">
+                <span>Monitor</span>
+                <span class="breadcrumb-separator">/</span>
+                <strong>Panel general</strong>
+            </div>
+
+            <div class="topbar-right">
+                <span class="live-indicator">
+                    <span class="status-dot offline" id="top-dot"></span>
+                    <span id="connection-label">DESCONECTADO</span>
+                </span>
+                <div class="avatar">TS</div>
+            </div>
+        </header>
+
+        <section class="page-content">
+
+            <div class="welcome-row">
+                <div>
+                    <div class="eyebrow">MONITOREO AMBIENTAL</div>
+                    <h1>Panel de temperatura</h1>
+                    <p class="muted">
+                        Consulta las mediciones registradas por tu dispositivo.
+                    </p>
+                </div>
+
+                <div class="date-card">
+                    <span class="date-icon">◷</span>
+                    <div>
+                        <strong id="current-date">--</strong>
+                        <small id="current-time">--:--:--</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notice" id="connection-notice" role="status">
+                <span class="notice-icon">i</span>
+                <div>
+                    <strong>Esperando conexión con el sensor</strong>
+                    <p>Los datos reales aparecerán cuando conectes el dispositivo a la plataforma.</p>
+                </div>
+                <span class="notice-badge">SIN DATOS</span>
+            </div>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Resumen del ambiente</h2>
+                    <p>Estado actual de las mediciones.</p>
+                </div>
+                <span class="section-tag">UNIDAD: °C</span>
+            </div>
+
+            <div class="metrics-grid">
+
+                <article class="metric-card temperature-card">
+                    <div class="metric-top">
+                        <span class="metric-icon temperature-icon">℃</span>
+                        <span class="metric-label">TEMPERATURA ACTUAL</span>
+                    </div>
+
+                    <div class="temperature-value">
+                        <span id="current-temperature">--.-</span>
+                        <span class="temperature-unit">°C</span>
+                    </div>
+
+                    <p class="metric-description" id="temperature-description">
+                        No hay una lectura disponible
+                    </p>
+
+                    <div class="metric-footer">
+                        <span class="footer-dot"></span>
+                        <span id="reading-status">Esperando medición</span>
+                    </div>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span class="metric-icon cyan-icon">↗</span>
+                        <span class="metric-label">TEMPERATURA MÁXIMA</span>
+                    </div>
+                    <div class="small-metric-value">
+                        <span id="max-temperature">--.-</span>
+                        <small>°C</small>
+                    </div>
+                    <p class="metric-description">Máximo desde el inicio del registro</p>
+                    <div class="metric-footer">
+                        <span class="footer-line cyan-line"></span>
+                        <span>Registro de sesión</span>
+                    </div>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span class="metric-icon purple-icon">↘</span>
+                        <span class="metric-label">TEMPERATURA MÍNIMA</span>
+                    </div>
+                    <div class="small-metric-value">
+                        <span id="min-temperature">--.-</span>
+                        <small>°C</small>
+                    </div>
+                    <p class="metric-description">Mínimo desde el inicio del registro</p>
+                    <div class="metric-footer">
+                        <span class="footer-line purple-line"></span>
+                        <span>Registro de sesión</span>
+                    </div>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span class="metric-icon green-icon">⌁</span>
+                        <span class="metric-label">ESTADO DEL DISPOSITIVO</span>
+                    </div>
+                    <div class="device-state" id="device-state">Desconectado</div>
+                    <p class="metric-description">Comunicación con el sensor</p>
+                    <div class="metric-footer">
+                        <span class="status-dot offline" id="device-dot"></span>
+                        <span id="device-detail">No se reciben datos</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="content-grid">
+
+                <section class="panel chart-panel" id="grafica">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Evolución de temperatura</h2>
+                            <p>Variación de las lecturas registradas.</p>
+                        </div>
+                        <span class="chart-unit">°C</span>
+                    </div>
+
+                    <div class="chart-legend">
+                        <span class="legend-dot"></span>
+                        Temperatura
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="temperature-chart"
+                                role="img"
+                                aria-label="Gráfica de temperaturas registradas">
+                        </canvas>
+                        <div class="chart-empty" id="chart-empty">
+                            <span class="empty-chart-icon">⌁</span>
+                            <strong>Sin mediciones todavía</strong>
+                            <p>La gráfica se actualizará al recibir lecturas.</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-footer">
+                        <span id="chart-reading-count">0 lecturas</span>
+                        <span id="chart-updated">Sin actualizaciones</span>
+                    </div>
+                </section>
+
+                <section class="panel status-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Estado del sistema</h2>
+                            <p>Información de conexión.</p>
+                        </div>
+                        <span class="system-icon">⌘</span>
+                    </div>
+
+                    <div class="system-status">
+                        <div class="system-status-icon">⌁</div>
+                        <div>
+                            <strong id="system-status-title">Esperando dispositivo</strong>
+                            <p id="system-status-description">
+                                Conecta el sensor para comenzar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="status-row">
+                        <span>Sensor</span>
+                        <strong id="sensor-status">Sin datos</strong>
+                    </div>
+                    <div class="status-row">
+                        <span>Última lectura</span>
+                        <strong id="last-reading">--:--:--</strong>
+                    </div>
+                    <div class="status-row">
+                        <span>Lecturas recibidas</span>
+                        <strong id="total-readings">0</strong>
+                    </div>
+
+                    <div class="connection-help">
+                        <span>ⓘ</span>
+                        <p>La conexión requiere un dispositivo y un servicio de comunicación configurados.</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <section class="panel history-panel" id="historial">
+                <div class="panel-header history-header">
+                    <div>
+                        <h2>Historial de mediciones</h2>
+                        <p>Últimas lecturas recibidas del sensor.</p>
+                    </div>
+                    <button class="secondary-button" id="export-button">
+                        ↓ Exportar CSV
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N.º</th>
+                                <th>HORA</th>
+                                <th>TEMPERATURA</th>
+                                <th>ORIGEN</th>
+                                <th>ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <tr>
+                                <td colspan="5" class="empty-table">
+                                    No existen mediciones registradas.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span id="history-count">0 registros</span>
+                    <span>Se muestran hasta 50 lecturas recientes</span>
+                </div>
+            </section>
+
+            <section class="panel settings-panel" id="configuracion">
+                <div class="panel-header">
+                    <div>
+                        <h2>Configuración de alertas</h2>
+                        <p>Define límites para identificar temperaturas fuera de rango.</p>
+                    </div>
+                    <span class="settings-icon">⚙</span>
+                </div>
+
+                <form id="settings-form" class="settings-form">
+                    <label>
+                        Temperatura mínima (°C)
+                        <input type="number" id="minimum-limit"
+                               value="18" min="-50" max="100" step="0.5" required>
+                    </label>
+
+                    <label>
+                        Temperatura máxima (°C)
+                        <input type="number" id="maximum-limit"
+                               value="30" min="-50" max="100" step="0.5" required>
+                    </label>
+
+                    <button type="submit" class="primary-button">
+                        Guardar límites
+                    </button>
+                </form>
+
+                <div class="alert-result" id="alert-result" role="status">
+                    <span class="alert-symbol">i</span>
+                    <span>Las alertas se evaluarán cuando existan lecturas válidas.</span>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-brand">
+                    <span class="brand-icon small-brand">°</span>
+                    <span>ThermoSense</span>
+                </div>
+                <p>Proyecto educativo · Unidad Educativa Liceo Mario Saielli</p>
+                <span id="footer-year"></span>
+            </footer>
+
+        </section>
+    </main>
+</div>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
